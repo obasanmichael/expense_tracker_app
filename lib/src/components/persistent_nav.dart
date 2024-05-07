@@ -16,6 +16,23 @@ class PersistentNav extends StatefulWidget {
 class _PersistentNavState extends State<PersistentNav> {
   late PersistentTabController _controller;
 
+  void _openRatingsLayer() {
+    showModalBottomSheet(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      // isDismissible: true,
+      // isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          child: const DummyScreen(),
+        );
+      },
+    );
+  }
+
   List<Widget> _buildScreens() {
     return [
       HomeScreen(),
@@ -26,6 +43,7 @@ class _PersistentNavState extends State<PersistentNav> {
     ];
   }
 
+  int _currentIndex = 0;
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
@@ -41,7 +59,16 @@ class _PersistentNavState extends State<PersistentNav> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-
+        onPressed: (ctx) {
+          if (_currentIndex == 2) {
+            _openRatingsLayer();
+          } else {
+            setState(() {
+              _currentIndex =
+                  2; // Set the current index to the index of the DummyScreen
+            });
+          }
+        },
         icon: Icon(
           Icons.add,
           color: Colors.white,
@@ -80,7 +107,7 @@ class _PersistentNavState extends State<PersistentNav> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.white, // Default is Colors.white.
+      backgroundColor: Colors.grey.shade200, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -88,7 +115,7 @@ class _PersistentNavState extends State<PersistentNav> {
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(35.0),
         colorBehindNavBar: Colors.white,
       ),
       popAllScreensOnTapOfSelectedTab: true,
