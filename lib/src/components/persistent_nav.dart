@@ -4,6 +4,7 @@ import 'package:expense_tracker_app/screens/history.dart';
 import 'package:expense_tracker_app/screens/home/home.dart';
 import 'package:expense_tracker_app/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class PersistentNav extends StatefulWidget {
@@ -115,7 +116,8 @@ class _PersistentNavState extends State<PersistentNav> {
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(35.0),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35.r), topRight: Radius.circular(35.r)),
         colorBehindNavBar: Colors.white,
       ),
       popAllScreensOnTapOfSelectedTab: true,

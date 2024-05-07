@@ -20,7 +20,7 @@ class AmountContainer extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Earnings this month', style: TextStyle(fontSize: 12)),
+              Text('Earnings this month', style: TextStyle(fontSize: 10)),
               addWidth(0),
               Icon(Icons.arrow_right)
             ],
