@@ -14,17 +14,20 @@ class _DummyScreenState extends State<DummyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Add a new Expense'),
-        addHeight(2),
-        TextField(
-          decoration: const InputDecoration(label: Text('Title')),
-        ),
-        addHeight(3),
-        Text('Add an amount'),
-        TextField(decoration: InputDecoration(label: Text('Amount')))
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+      child: Column(
+        children: [
+          Text('Add a new Expense'),
+          addHeight(2),
+          TextField(
+            decoration: const InputDecoration(label: Text('Title')),
+          ),
+          addHeight(3),
+          Text('Add an amount'),
+          TextField(decoration: InputDecoration(label: Text('Amount')))
+        ],
+      ),
     );
   }
 }
