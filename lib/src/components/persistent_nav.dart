@@ -3,9 +3,7 @@ import 'package:expense_tracker_app/screens/dummy.dart';
 import 'package:expense_tracker_app/screens/history.dart';
 import 'package:expense_tracker_app/screens/home/home.dart';
 import 'package:expense_tracker_app/screens/settings/settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class PersistentNav extends StatefulWidget {
@@ -43,7 +41,7 @@ class _PersistentNavState extends State<PersistentNav> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        
+
         icon: Icon(
           Icons.add,
           color: Colors.white,
