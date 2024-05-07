@@ -10,18 +10,26 @@ class AmountContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+      height: 100.h,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: Colors.green.shade100),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 12.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Text('Earnings this month'),
-              addWidth(1),
+              Text('Earnings this month', style: TextStyle(fontSize: 12)),
+              addWidth(0),
               Icon(Icons.arrow_right)
             ],
           ),
           Spacer(),
-          Text('#1,200.00', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22.sp),)
+          Text(
+            '#1,200.00',
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22.sp),
+          )
         ],
       ),
     );
