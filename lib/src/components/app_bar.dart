@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class MyAppBar extends StatelessWidget {
   const MyAppBar({super.key});
   Widget addHeight(double height) => SizedBox(height: height.h);
-  Widget addWidth(double width) => SizedBox(height: width.h);
+  Widget addWidth(double width) => SizedBox(height: width.w);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class MyAppBar extends StatelessWidget {
           children: [
             Text(
               'Good Morning,',
-              style: TextStyle(fontSize: 16.sp),
+              style: TextStyle(fontSize: 13.sp),
             ),
             addHeight(2),
             Text(
               'Tolulope Obasan',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
             ),
           ],
         ),
@@ -33,7 +33,7 @@ class MyAppBar extends StatelessWidget {
               icon: Icon(Icons.notifications_outlined),
               iconSize: 30,
             ),
-            addWidth(5),
+            addWidth(20),
             CircleAvatar(
               child: Icon(Icons.person),
               radius: 30,
