@@ -37,7 +37,7 @@ class MyAppBar extends StatelessWidget {
             CircleAvatar(
               child: Icon(Icons.person),
               radius: 30,
-              backgroundColor: Colors.orange.shade700,
+              backgroundColor: Color(0xffE97451),
             )
           ],
         )

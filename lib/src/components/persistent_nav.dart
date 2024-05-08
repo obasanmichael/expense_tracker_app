@@ -50,13 +50,13 @@ class _PersistentNavState extends State<PersistentNav> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home_outlined),
         title: ("Home"),
-        activeColorPrimary: Colors.orange.shade800,
+        activeColorPrimary: Color(0xffE97451),
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.category_outlined),
         title: ("Category"),
-        activeColorPrimary: Colors.orange.shade800,
+        activeColorPrimary: Color(0xffE97451),
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
@@ -76,19 +76,19 @@ class _PersistentNavState extends State<PersistentNav> {
           size: 35,
         ),
         title: ("Add"),
-        activeColorPrimary: Colors.orange.shade800,
+        activeColorPrimary: Color(0xffE97451),
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.calendar_today_outlined),
         title: ("Calendar"),
-        activeColorPrimary: Colors.orange.shade800,
+        activeColorPrimary: Color(0xffE97451),
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings_outlined),
         title: ("Settings"),
-        activeColorPrimary: Colors.orange.shade800,
+        activeColorPrimary: Color(0xffE97451),
         inactiveColorPrimary: Colors.grey,
       ),
     ];
