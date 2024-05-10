@@ -7,31 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.registeredExpense});
+
+  final List<Expense> registeredExpense;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Expense> _registeredExpense = [
-    Expense(
-        title: 'Food',
-        date: DateTime.now(),
-        amount: 12000,
-        category: Category.food),
-    Expense(
-        title: 'Movies',
-        date: DateTime.now(),
-        amount: 10000,
-        category: Category.movies),
-    Expense(
-        title: 'medication',
-        date: DateTime.now(),
-        amount: 12000,
-        category: Category.health)
-  ];
-
   Widget addHeight(double height) => SizedBox(height: height.h);
 
   Widget addWidth(double width) => SizedBox(width: width.w);
@@ -82,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    Expanded(child: ExpensesList(expenses: _registeredExpense)),
+                    Expanded(
+                        child:
+                            ExpensesList(expenses: widget.registeredExpense)),
                   ],
                 ),
               )

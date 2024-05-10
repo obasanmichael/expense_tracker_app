@@ -1,13 +1,13 @@
 import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/src/components/button.dart';
 import 'package:expense_tracker_app/src/components/category_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -16,8 +16,52 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   Widget addHeight(double height) => SizedBox(height: height.h);
   Widget addWidth(double width) => SizedBox(width: width.w);
+  Category _selectedCategory = Category.leisure;
   DateTime? _selectedDate;
   late bool isDatePicked;
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  void _submitExpense() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsValid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim() == null ||
+        amountIsValid ||
+        _selectedDate == null) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text('Invalid input'),
+                content: const Text(
+                    'Ensure to enter valid amount, title, date and category.'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                      },
+                      child: Text('Okay'))
+                ],
+              ));
+      return;
+    }
+
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text,
+        date: _selectedDate!,
+        amount: enteredAmount,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
+  }
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -35,87 +79,123 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 25.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.keyboard_arrow_down,
-                size: 35,
-                color: Colors.grey,
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 25.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 35,
+                  color: Colors.grey,
+                ),
               ),
             ),
-          ),
-          addHeight(10),
-          Text(
-            'Add a new Expense',
-            style: TextStyle(
-                fontWeight: FontWeight.w700, color: Colors.grey.shade600),
-          ),
-          addHeight(2),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(10.r)),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-              labelText: 'Title',
-              // hintText: '',
+            addHeight(10),
+            Text(
+              'Add a new Expense',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700, color: Colors.grey.shade600),
             ),
-          ),
-          addHeight(25),
-          // Text(
-          //   'Add an amount',
-          //   style: TextStyle(
-          //       fontWeight: FontWeight.w700, color: Colors.grey.shade600),
-          // ),
-          addHeight(5),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(10.r)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-                    labelText: 'Amount',
-                    hintText: 'Enter your Amount',
+            addHeight(7),
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade800),
+                    borderRadius: BorderRadius.circular(10.r)),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(10.r)),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+                hintText: 'Enter a title',
+                // hintText: '',
+              ),
+            ),
+            addHeight(25),
+            // Text(
+            //   'Add an amount',
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.w700, color: Colors.grey.shade600),
+            // ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _amountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade800),
+                          borderRadius: BorderRadius.circular(10.r)),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(10.r)),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.h, horizontal: 15.w),
+                      labelText: 'Amount',
+                      prefixText: '# ',
+                      prefixStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                      labelStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter your Amount',
+                    ),
                   ),
                 ),
-              ),
-              addWidth(5),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(_selectedDate == null
-                        ? 'Pick a date'
-                        : myFormatter.format(_selectedDate!)),
-                    addWidth(0),
-                    IconButton(
-                        onPressed: _presentDatePicker,
-                        icon: Icon(Icons.calendar_month_outlined))
-                  ],
+                addWidth(5),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(_selectedDate == null
+                          ? 'Pick a date'
+                          : myFormatter.format(_selectedDate!)),
+                      addWidth(0),
+                      IconButton(
+                          onPressed: _presentDatePicker,
+                          icon: Icon(Icons.calendar_month_outlined))
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            addHeight(20),
+            Text('Select a Category of expenses'),
+            addHeight(20),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: Category.values
+                    .map((category) => CategoryButton(category: category))
+                    .toList(),
               ),
-            ],
-          ),
-          addHeight(20),
-          Text('Select a Category of expenses'),
-          addHeight(10),
-          CategoryButton(),
-          Spacer(),
-          Button(backgroundColor: null, text: 'Add expense')
-        ],
+            ),
+            addHeight(25),
+            Row(
+              children: [
+                Expanded(
+                    child: Button(
+                        function: () => Navigator.pop(context),
+                        backgroundColor: null,
+                        text: 'Cancel')),
+                addWidth(10),
+                Expanded(
+                    child: Button(
+                        function: _submitExpense,
+                        backgroundColor: null,
+                        text: 'Add expense')),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

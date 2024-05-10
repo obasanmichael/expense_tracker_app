@@ -1,3 +1,4 @@
+import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/screens/categories/categories.dart';
 import 'package:expense_tracker_app/widgets/expense/new_expense.dart';
 import 'package:expense_tracker_app/screens/history.dart';
@@ -16,6 +17,30 @@ class PersistentNav extends StatefulWidget {
 
 class _PersistentNavState extends State<PersistentNav> {
   late PersistentTabController _controller;
+
+  List<Expense> registeredExpense = [
+    Expense(
+        title: 'Food',
+        date: DateTime.now(),
+        amount: 12000,
+        category: Category.food),
+    Expense(
+        title: 'Movies',
+        date: DateTime.now(),
+        amount: 10000,
+        category: Category.movies),
+    Expense(
+        title: 'medication',
+        date: DateTime.now(),
+        amount: 12000,
+        category: Category.health)
+  ];
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      registeredExpense.add(expense);
+    });
+  }
 
   void _openRatingsLayer() {
     //   showModalBottomSheet<dynamic>(
@@ -45,7 +70,7 @@ class _PersistentNavState extends State<PersistentNav> {
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-          child: const NewExpense(),
+          child:  NewExpense(onAddExpense: _addExpense,),
         );
       },
     );
@@ -53,9 +78,9 @@ class _PersistentNavState extends State<PersistentNav> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
+      HomeScreen(registeredExpense: registeredExpense,),
       CategoryScreen(),
-      NewExpense(),
+      NewExpense(onAddExpense: _addExpense),
       HistoryScreen(),
       SettingsScreen(),
     ];
