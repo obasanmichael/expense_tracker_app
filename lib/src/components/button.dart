@@ -6,10 +6,12 @@ class Button extends StatelessWidget {
     super.key,
     required this.backgroundColor,
     required this.text,
+    required this.function,
   });
 
   final String text;
   final Color? backgroundColor;
+  final void Function() function;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class Button extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: function,
         style: ElevatedButton.styleFrom(
             backgroundColor: defaultColor ?? backgroundColor,
             shape: RoundedRectangleBorder(
