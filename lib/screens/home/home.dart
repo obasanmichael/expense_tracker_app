@@ -2,11 +2,8 @@ import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
 import 'package:expense_tracker_app/src/components/expenses_chart/expenses_chart.dart';
-import 'package:expense_tracker_app/widgets/expense/expense_item.dart';
 import 'package:expense_tracker_app/widgets/expense/expenses_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {

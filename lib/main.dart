@@ -1,4 +1,3 @@
-import 'package:expense_tracker_app/screens/home/home.dart';
 import 'package:expense_tracker_app/src/components/persistent_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,5 +1,4 @@
 import 'package:expense_tracker_app/src/components/expenses_chart/bar_chat.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
