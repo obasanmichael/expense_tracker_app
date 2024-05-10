@@ -1,5 +1,5 @@
 import 'package:expense_tracker_app/screens/categories/categories.dart';
-import 'package:expense_tracker_app/screens/dummy.dart';
+import 'package:expense_tracker_app/widgets/expense/new_expense.dart';
 import 'package:expense_tracker_app/screens/history.dart';
 import 'package:expense_tracker_app/screens/home/home.dart';
 import 'package:expense_tracker_app/screens/settings/settings.dart';
@@ -18,17 +18,33 @@ class _PersistentNavState extends State<PersistentNav> {
   late PersistentTabController _controller;
 
   void _openRatingsLayer() {
+    //   showModalBottomSheet<dynamic>(
+    //     isScrollControlled: true,
+    //     context: context,
+    //     builder: (BuildContext ctx) {
+    //       return Wrap(children: <Widget>[
+    //         Container(
+    //           decoration: const BoxDecoration(
+    //               color: Colors.white,
+    //               borderRadius: BorderRadius.only(
+    //                   topLeft: Radius.circular(25.0),
+    //                   topRight: Radius.circular(25.0))),
+    //           child: NewExpense(),
+    //         )
+    //       ]);
+    //     },
+    //   );
     showModalBottomSheet(
       elevation: 0,
       backgroundColor: Colors.white,
-      isDismissible: true,
+      // isDismissible: true,
       // isScrollControlled: true,
       context: context,
       builder: (ctx) {
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-          child: const DummyScreen(),
+          child: const NewExpense(),
         );
       },
     );
@@ -38,7 +54,7 @@ class _PersistentNavState extends State<PersistentNav> {
     return [
       HomeScreen(),
       CategoryScreen(),
-      DummyScreen(),
+      NewExpense(),
       HistoryScreen(),
       SettingsScreen(),
     ];
@@ -66,7 +82,7 @@ class _PersistentNavState extends State<PersistentNav> {
           } else {
             setState(() {
               _currentIndex =
-                  2; // Set the current index to the index of the DummyScreen
+                  2; // Set the current index to the index of the NewExpense
             });
           }
         },
