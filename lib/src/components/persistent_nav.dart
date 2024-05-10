@@ -37,6 +37,7 @@ class _PersistentNavState extends State<PersistentNav> {
     showModalBottomSheet(
       elevation: 0,
       backgroundColor: Colors.white,
+      isScrollControlled: true,
       // isDismissible: true,
       // isScrollControlled: true,
       context: context,
