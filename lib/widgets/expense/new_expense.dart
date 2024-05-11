@@ -16,11 +16,12 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   Widget addHeight(double height) => SizedBox(height: height.h);
   Widget addWidth(double width) => SizedBox(width: width.w);
-  Category _selectedCategory = Category.leisure;
+  Category? _selectedCategory;
   DateTime? _selectedDate;
   late bool isDatePicked;
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  final _categoryController = TextEditingController();
 
   @override
   void dispose() {
@@ -57,10 +58,19 @@ class _NewExpenseState extends State<NewExpense> {
         title: _titleController.text,
         date: _selectedDate!,
         amount: enteredAmount,
-        category: _selectedCategory,
+        category: _selectedCategory!,
       ),
     );
     Navigator.pop(context);
+  }
+
+  void _showCategory(Category pickedCategory) {
+    // final pickedCategory = _categoryController;
+
+    setState(() {
+      _selectedCategory = pickedCategory;
+      _categoryController.text = pickedCategory.toString().split('.').last;
+    });
   }
 
   void _presentDatePicker() async {
@@ -168,13 +178,26 @@ class _NewExpenseState extends State<NewExpense> {
               ],
             ),
             addHeight(20),
-            Text('Select a Category of expenses'),
+            Row(
+              children: [
+                Expanded(child: Text('Select a Category')),
+                addWidth(5),
+                Expanded(
+                  child: TextField(
+                    controller: _categoryController,
+                    readOnly: false,
+                  ),
+                )
+              ],
+            ),
             addHeight(20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: Category.values
-                    .map((category) => CategoryButton(category: category))
+                    .map((category) => CategoryButton(
+                        onPressed: () => _showCategory(category),
+                        category: category))
                     .toList(),
               ),
             ),

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryButton extends StatelessWidget {
-  const CategoryButton({super.key, required this.category});
+  const CategoryButton({super.key, required this.category, required this.onPressed});
 
   final Category category;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CategoryButton extends StatelessWidget {
               ),
               elevation: 0,
               foregroundColor: Colors.grey.shade700),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Text(
             category.toString().split('.').last,
             style: TextStyle(
