@@ -1,26 +1,43 @@
+import 'package:expense_tracker_app/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class AmountContainer extends StatelessWidget {
-  const AmountContainer(
-      {super.key,
-      required this.heading,
-      required this.price,
-      required this.bgColor});
+  const AmountContainer({
+    Key? key,
+    required this.heading,
+    required this.bgColor,
+    required this.registeredExpense,
+  }) : super(key: key);
 
   final String heading;
-  final double price;
   final Color bgColor;
+  final List<Expense> registeredExpense;
 
-  Widget addHeight(double height) => SizedBox(height: height.h);
-  Widget addWidth(double width) => SizedBox(width: width.w);
+  String calculateTotalExpenses() {
+    double total = 0.0;
+    for (var expense in registeredExpense) {
+      total += expense.amount;
+    }
+    MoneyFormatterOutput result = MoneyFormatter(
+      amount: total,
+      settings: MoneyFormatterSettings(
+          symbol: '₦', thousandSeparator: ',', fractionDigits: 2),
+    ).output;
+    return result.symbolOnLeft;
+  }
 
   @override
   Widget build(BuildContext context) {
+    String totalPrice = calculateTotalExpenses();
+
     return Container(
       height: 100.h,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r), color: bgColor),
+        borderRadius: BorderRadius.circular(20.r),
+        color: bgColor,
+      ),
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,18 +45,18 @@ class AmountContainer extends StatelessWidget {
           Row(
             children: [
               Text(heading, style: TextStyle(fontSize: 10)),
-              addWidth(0),
+              SizedBox(width: 0),
               Icon(
                 Icons.chevron_right,
                 size: 12,
-              )
+              ),
             ],
           ),
           Spacer(),
           Text(
-            '#${price.toStringAsFixed(2)}',
+            totalPrice,
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22.sp),
-          )
+          ),
         ],
       ),
     );

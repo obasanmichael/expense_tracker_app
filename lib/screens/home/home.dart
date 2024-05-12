@@ -44,17 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                       child: AmountContainer(
+                    registeredExpense: widget.registeredExpense,
                     heading: 'Earning this month',
                     bgColor: Colors.green.shade100,
-                    price: 20000,
                   )),
                   // Spacer(),
                   addWidth(15),
                   Expanded(
                       child: AmountContainer(
+                    registeredExpense: widget.registeredExpense,
                     heading: 'Expenses this month',
                     bgColor: Color(0xffF4C2C2),
-                    price: 20000,
                   )),
                 ],
               ),
