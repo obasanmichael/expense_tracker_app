@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:expense_tracker_app/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense, required this.onDelete});
@@ -8,8 +12,25 @@ class ExpenseItem extends StatelessWidget {
   final Expense expense;
   final void Function(Expense expense) onDelete;
 
+  String getCurrency() {
+    var format =
+        NumberFormat.simpleCurrency(locale: Platform.localeName, name: 'NGN');
+    return format.currencySymbol;
+  }
+
+  String formatAmount(double amount) {
+    MoneyFormatterOutput result = MoneyFormatter(
+      amount: amount,
+      settings: MoneyFormatterSettings(
+          symbol: '₦', thousandSeparator: ',', fractionDigits: 2),
+    ).output;
+
+    return result.symbolOnLeft;
+  }
+
   @override
   Widget build(BuildContext context) {
+    String formattedAmount = formatAmount(expense.amount);
     return InkWell(
       onLongPress: () => showDialog(
           context: context,
@@ -17,6 +38,12 @@ class ExpenseItem extends StatelessWidget {
                 title: const Text('Do you want to delete this expense?'),
                 backgroundColor: Colors.white,
                 actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: Text('No'),
+                  ),
                   TextButton(
                     onPressed: () {
                       onDelete(expense);
@@ -55,7 +82,7 @@ class ExpenseItem extends StatelessWidget {
         ),
         subtitle: Text(expense.formattedDate),
         trailing: Text(
-          '-#${expense.amount.toStringAsFixed(2)}',
+          '-$formattedAmount',
           style: TextStyle(color: Colors.red.shade600, fontSize: 16),
         ),
         tileColor: Colors.transparent,

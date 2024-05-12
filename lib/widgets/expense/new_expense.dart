@@ -152,7 +152,7 @@ class _NewExpenseState extends State<NewExpense> {
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 15.h, horizontal: 15.w),
                       labelText: 'Amount',
-                      prefixText: '# ',
+                      prefixText: '₦ ',
                       prefixStyle:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                       labelStyle: TextStyle(color: Colors.black),
