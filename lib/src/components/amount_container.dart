@@ -9,7 +9,7 @@ class AmountContainer extends StatelessWidget {
       required this.bgColor});
 
   final String heading;
-  final String price;
+  final double price;
   final Color bgColor;
 
   Widget addHeight(double height) => SizedBox(height: height.h);
@@ -20,8 +20,7 @@ class AmountContainer extends StatelessWidget {
     return Container(
       height: 100.h,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
-          color: bgColor),
+          borderRadius: BorderRadius.circular(20.r), color: bgColor),
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +37,7 @@ class AmountContainer extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            '#${price}',
+            '#${price.toStringAsFixed(2)}',
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22.sp),
           )
         ],

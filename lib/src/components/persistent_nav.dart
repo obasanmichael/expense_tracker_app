@@ -19,26 +19,32 @@ class _PersistentNavState extends State<PersistentNav> {
   late PersistentTabController _controller;
 
   List<Expense> registeredExpense = [
-    Expense(
-        title: 'Food',
-        date: DateTime.now(),
-        amount: 12000,
-        category: Category.food),
-    Expense(
-        title: 'Movies',
-        date: DateTime.now(),
-        amount: 10000,
-        category: Category.movies),
-    Expense(
-        title: 'medication',
-        date: DateTime.now(),
-        amount: 12000,
-        category: Category.health)
+    // Expense(
+    //     title: 'Food',
+    //     date: DateTime.now(),
+    //     amount: 12000,
+    //     category: Category.food),
+    // Expense(
+    //     title: 'Movies',
+    //     date: DateTime.now(),
+    //     amount: 10000,
+    //     category: Category.movies),
+    // Expense(
+    //     title: 'medication',
+    //     date: DateTime.now(),
+    //     amount: 12000,
+    //     category: Category.health)
   ];
 
   void _addExpense(Expense expense) {
     setState(() {
       registeredExpense.add(expense);
+    });
+  }
+  void onDelete(Expense expense) {
+    setState(() {
+      registeredExpense.remove(expense);
+      // Navigator.pop(context);
     });
   }
 
@@ -70,7 +76,9 @@ class _PersistentNavState extends State<PersistentNav> {
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-          child:  NewExpense(onAddExpense: _addExpense,),
+          child: NewExpense(
+            onAddExpense: _addExpense,
+          ),
         );
       },
     );
@@ -78,7 +86,9 @@ class _PersistentNavState extends State<PersistentNav> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(registeredExpense: registeredExpense,),
+      HomeScreen(
+        registeredExpense: registeredExpense,
+      ),
       CategoryScreen(),
       NewExpense(onAddExpense: _addExpense),
       HistoryScreen(),

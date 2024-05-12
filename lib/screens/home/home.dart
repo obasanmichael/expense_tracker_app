@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
@@ -20,6 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget addWidth(double width) => SizedBox(width: width.w);
 
+  void onDelete(Expense expense) {
+    setState(() {
+      widget.registeredExpense.remove(expense);
+      // Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyAppBar(),
               addHeight(25),
@@ -36,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: AmountContainer(
                     heading: 'Earning this month',
                     bgColor: Colors.green.shade100,
-                    price: '20,000',
+                    price: 20000,
                   )),
                   // Spacer(),
                   addWidth(15),
@@ -44,31 +54,54 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: AmountContainer(
                     heading: 'Expenses this month',
                     bgColor: Color(0xffF4C2C2),
-                    price: '10,000',
+                    price: 20000,
                   )),
                 ],
               ),
               addHeight(20),
               ExpensesChart(),
               addHeight(20),
-              Row(
-                children: [
-                  Text('Last 10 transactions',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800, fontSize: 12.sp)),
-                  Spacer(),
-                  Text('view all'.toUpperCase(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black))
-                ],
-              ),
+              widget.registeredExpense.length != 0
+                  ? Row(
+                      children: [
+                        Text(
+                            'Last ${widget.registeredExpense.length} transaction(s)',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800, fontSize: 12.sp)),
+                        Spacer(),
+                        Text('view all'.toUpperCase(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black))
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        Text(
+                          'You have yet to make any transactions.',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800, fontSize: 15.sp),
+                          textAlign: TextAlign.left,
+                        ),
+                        addHeight(2),
+                        Text(
+                          'Click on the add button below to add an expense',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey.shade700,
+                            fontSize: 12.sp,
+                          ),
+                        )
+                      ],
+                    ),
               addHeight(15),
               Expanded(
                 child: Column(
                   children: [
                     Expanded(
-                        child:
-                            ExpensesList(expenses: widget.registeredExpense)),
+                        child: ExpensesList(
+                            onDelete: onDelete,
+                            expenses: widget.registeredExpense)),
                   ],
                 ),
               )

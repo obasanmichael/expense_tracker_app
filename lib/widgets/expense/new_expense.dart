@@ -185,7 +185,7 @@ class _NewExpenseState extends State<NewExpense> {
                 Expanded(
                   child: TextField(
                     controller: _categoryController,
-                    readOnly: false,
+                    readOnly: true,
                   ),
                 )
               ],
