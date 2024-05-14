@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     )
                   : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'You have yet to make any transactions.',
