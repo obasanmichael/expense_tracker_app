@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
+import 'package:expense_tracker_app/src/components/earnings_container.dart';
 import 'package:expense_tracker_app/src/components/expenses_chart/expenses_chart.dart';
 import 'package:expense_tracker_app/widgets/expense/expenses_list.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Expanded(
-                      child: AmountContainer(
-                    registeredExpense: widget.registeredExpense,
+                      child: EarningsContainer(
                     heading: 'Earning this month',
                     bgColor: Colors.green.shade100,
                   )),
@@ -53,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                       child: AmountContainer(
                     registeredExpense: widget.registeredExpense,
-                    heading: 'Expenses this month',
+                    heading: 'Expenses so far',
                     bgColor: Color(0xffF4C2C2),
                   )),
                 ],
