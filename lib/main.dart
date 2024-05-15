@@ -1,3 +1,5 @@
+import 'package:expense_tracker_app/provider/salary_provider.dart';
+import 'package:expense_tracker_app/screens/auth/sign_up.dart';
 import 'package:expense_tracker_app/screens/error_page.dart';
 import 'package:expense_tracker_app/screens/onboarding/splash_screen.dart';
 import 'package:expense_tracker_app/src/components/persistent_nav.dart';
@@ -9,8 +11,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-          create: (context) => ThemeProvider(), child: const MyApp()),
+      MultiProvider(providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(create: (context)=> SalaryProvider())
+      ], child: const MyApp()),
     );
 
 final GoRouter _router = GoRouter(
@@ -20,6 +26,10 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) => SplashScreen(),
+    ),
+    GoRoute(
+      path: '/sign-up',
+      builder: (BuildContext context, GoRouterState state) => SignUpScreen(),
     ),
     GoRoute(
       path: '/home',
