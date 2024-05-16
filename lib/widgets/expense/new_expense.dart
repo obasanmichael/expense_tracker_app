@@ -33,8 +33,7 @@ class _NewExpenseState extends State<NewExpense> {
   void _submitExpense() {
     final enteredAmount = double.tryParse(_amountController.text);
     final amountIsValid = enteredAmount == null || enteredAmount <= 0;
-    if (_titleController.text.trim() == null ||
-        amountIsValid ||
+    if (amountIsValid ||
         _selectedDate == null) {
       showDialog(
           context: context,
@@ -47,7 +46,7 @@ class _NewExpenseState extends State<NewExpense> {
                       onPressed: () {
                         Navigator.pop(ctx);
                       },
-                      child: Text('Okay'))
+                      child: const Text('Okay'))
                 ],
               ));
       return;
@@ -207,13 +206,11 @@ class _NewExpenseState extends State<NewExpense> {
                 Expanded(
                     child: Button(
                         function: () => Navigator.pop(context),
-                        backgroundColor: null,
                         text: 'Cancel')),
                 addWidth(10),
                 Expanded(
                     child: Button(
                         function: _submitExpense,
-                        backgroundColor: null,
                         text: 'Add expense')),
               ],
             )

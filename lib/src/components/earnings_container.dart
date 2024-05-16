@@ -1,4 +1,3 @@
-import 'package:expense_tracker_app/models/expense.dart';
 import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,11 +6,11 @@ import 'package:money_formatter/money_formatter.dart';
 
 class EarningsContainer extends ConsumerWidget {
   const EarningsContainer({
-    Key? key,
+    super.key,
     required this.heading,
     required this.bgColor,
     // required this.registeredExpense,
-  }) : super(key: key);
+  });
 
   final String heading;
   final Color bgColor;
@@ -30,7 +29,7 @@ class EarningsContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final salary = ref.read(SalaryProvider);
     print('Salary fetched from provider: $salary');
-    String totalPrice = calculateTotalExpenses(salary!);
+    String totalPrice = calculateTotalExpenses(salary);
     print('Formatted salary: $totalPrice');
 
     return Container(

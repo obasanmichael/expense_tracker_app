@@ -4,13 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Button extends StatelessWidget {
   const Button({
     super.key,
-    required this.backgroundColor,
     required this.text,
     required this.function,
   });
 
   final String text;
-  final Color? backgroundColor;
   final void Function() function;
 
   @override
@@ -21,7 +19,7 @@ class Button extends StatelessWidget {
       child: ElevatedButton(
         onPressed: function,
         style: ElevatedButton.styleFrom(
-            backgroundColor: defaultColor ?? backgroundColor,
+            backgroundColor: defaultColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.r)),
             padding: EdgeInsets.symmetric(vertical: 15.h)),
