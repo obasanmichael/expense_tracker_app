@@ -1,3 +1,4 @@
+import 'package:expense_tracker_app/provider/name_provider.dart';
 import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:expense_tracker_app/src/components/button.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,14 @@ class SignUpScreen extends ConsumerStatefulWidget {
 
 class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _salaryController = TextEditingController();
+  final _fNameController = TextEditingController();
+  final _lNameController = TextEditingController();
 
   @override
   void dispose() {
     _salaryController.dispose();
+    _fNameController.dispose();
+    _lNameController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -27,6 +32,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     Widget addHeight(double height) => SizedBox(height: height.h);
     Widget addWidth(double width) => SizedBox(width: width.w);
     ref.watch(SalaryProvider);
+    ref.watch(firstNameProvider);
+    ref.watch(lastNameProvider);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -34,6 +41,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           children: [
             Spacer(),
             TextField(
+              controller: _fNameController,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade800),
@@ -49,6 +57,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             ),
             addHeight(15),
             TextField(
+              controller: _lNameController,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade800),
@@ -86,6 +95,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             Button(
               text: 'Make an Expense',
               function: () {
+                String fName = _fNameController.text;
+                String lName = _lNameController.text;
+                ref.read(firstNameProvider.notifier).state = fName;
+                ref.read(lastNameProvider.notifier).state = lName;
                 final salaryText = _salaryController.text
                     .trim()
                     .replaceAll('₦', '')
@@ -94,6 +107,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 if (salary != null) {
                   ref.read(SalaryProvider.notifier).state = salary;
+
                   context.go('/home');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
