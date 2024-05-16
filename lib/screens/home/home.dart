@@ -1,25 +1,30 @@
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:expense_tracker_app/provider/amounts_provider.dart';
+import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
 import 'package:expense_tracker_app/src/components/earnings_container.dart';
 import 'package:expense_tracker_app/src/components/expenses_chart/expenses_chart.dart';
+import 'package:expense_tracker_app/src/components/show_alert.dart';
 import 'package:expense_tracker_app/widgets/expense/expenses_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key, required this.registeredExpense});
 
   final List<Expense> registeredExpense;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget addHeight(double height) => SizedBox(height: height.h);
 
   Widget addWidth(double width) => SizedBox(width: width.w);
+  bool hasAcknowledgedAlert = false;
 
   void onDelete(Expense expense) {
     setState(() {
@@ -28,9 +33,48 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void showExpenseAlert(BuildContext context, VoidCallback onYesPressed) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Expenses Exceeded Salary'),
+          content: Text(
+              'Your total expenses have exceeded your salary. Do you want to continue?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+                onYesPressed(); // Execute the callback
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+    final totalExpense = ref.watch(totalExpensesProvider);
+    final salary = ref.watch(SalaryProvider);
+
+    if (totalExpense > salary && !hasAcknowledgedAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showExpenseAlert(context, () {
+          setState(() {
+            hasAcknowledgedAlert = true;
+          });
+        });
+      });
+    }
     return Scaffold(
       body: SafeArea(
         child: Padding(
