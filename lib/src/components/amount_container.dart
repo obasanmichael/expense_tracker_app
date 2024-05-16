@@ -1,11 +1,9 @@
 import 'package:expense_tracker_app/models/expense.dart';
-import 'package:expense_tracker_app/provider/amounts_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_formatter/money_formatter.dart';
 
-class AmountContainer extends ConsumerWidget {
+class AmountContainer extends StatelessWidget {
   const AmountContainer({
     Key? key,
     required this.heading,
@@ -17,23 +15,23 @@ class AmountContainer extends ConsumerWidget {
   final Color bgColor;
   final List<Expense> registeredExpense;
 
-  double calculateTotalExpenses() {
+  String calculateTotalExpenses() {
     double total = 0.0;
     for (var expense in registeredExpense) {
       total += expense.amount;
     }
-    return total;
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    double totalPrice = calculateTotalExpenses();
-    ref.watch(totalExpensesProvider.notifier).state = totalPrice;
     MoneyFormatterOutput result = MoneyFormatter(
-      amount: totalPrice,
+      amount: total,
       settings: MoneyFormatterSettings(
           symbol: '₦', thousandSeparator: ',', fractionDigits: 2),
     ).output;
+    return result.symbolOnLeft;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String totalPrice = calculateTotalExpenses();
+
     return Container(
       height: 100.h,
       decoration: BoxDecoration(
@@ -56,7 +54,7 @@ class AmountContainer extends ConsumerWidget {
           ),
           Spacer(),
           Text(
-            result.symbolOnLeft,
+            totalPrice,
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22.sp),
           ),
         ],

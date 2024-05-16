@@ -38,8 +38,24 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Spacer(),
+            Text(
+              'You can sign in',
+              style: TextStyle(
+                  fontSize: 40.sp,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black),
+            ),
+            Text(
+              'here!',
+              style: TextStyle(
+                  fontSize: 40.sp,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xffE97451)),
+            ),
+            SizedBox(height: 50.h),
             TextField(
               controller: _fNameController,
               decoration: InputDecoration(

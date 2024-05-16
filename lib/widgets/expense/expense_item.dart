@@ -46,8 +46,10 @@ class ExpenseItem extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      onDelete(expense);
                       Navigator.pop(ctx);
+                      Future.delayed(Duration.zero, () {
+                        onDelete(expense);
+                      });
                     },
                     child: Text('Yes'),
                   ),

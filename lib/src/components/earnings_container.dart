@@ -28,9 +28,7 @@ class EarningsContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final salary = ref.read(SalaryProvider);
-    print('Salary fetched from provider: $salary');
     String totalPrice = calculateTotalExpenses(salary);
-    print('Formatted salary: $totalPrice');
 
     return Container(
       height: 100.h,

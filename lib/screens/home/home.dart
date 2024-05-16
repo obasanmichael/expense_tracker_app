@@ -62,18 +62,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final totalExpense = ref.watch(totalExpensesProvider);
-    final salary = ref.watch(SalaryProvider);
-
-    if (totalExpense > salary && !hasAcknowledgedAlert) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showExpenseAlert(context, () {
-          setState(() {
-            hasAcknowledgedAlert = true;
-          });
-        });
-      });
-    }
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (totalExpense > salary && !hasAcknowledgedAlert) {
+    //     showExpenseAlert(context, () {
+    //       setState(() {
+    //         hasAcknowledgedAlert = true;
+    //       });
+    //     });
+    //   }
+    // });
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -142,9 +139,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Column(
                   children: [
                     Expanded(
-                        child: ExpensesList(
-                            onDelete: onDelete,
-                            expenses: widget.registeredExpense)),
+                      child: ExpensesList(
+                          onDelete: (expense) {
+                            Future.microtask(() {
+                              setState(() {
+                                widget.registeredExpense.remove(expense);
+                              });
+                            });
+                          },
+                          expenses: widget.registeredExpense),
+                    ),
                   ],
                 ),
               )
