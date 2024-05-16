@@ -5,7 +5,6 @@ import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
 import 'package:expense_tracker_app/src/components/earnings_container.dart';
 import 'package:expense_tracker_app/src/components/expenses_chart/expenses_chart.dart';
-import 'package:expense_tracker_app/src/components/show_alert.dart';
 import 'package:expense_tracker_app/widgets/expense/expenses_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,7 +87,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Expanded(
                       child: EarningsContainer(
-                    heading: 'Earning this month',
+                    heading: 'Earnings this month',
                     bgColor: Colors.green.shade100,
                   )),
                   // Spacer(),
