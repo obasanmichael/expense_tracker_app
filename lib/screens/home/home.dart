@@ -1,6 +1,4 @@
 import 'package:expense_tracker_app/models/expense.dart';
-import 'package:expense_tracker_app/provider/amounts_provider.dart';
-import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
 import 'package:expense_tracker_app/src/components/earnings_container.dart';
