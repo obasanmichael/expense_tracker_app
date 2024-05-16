@@ -1,9 +1,11 @@
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_formatter/money_formatter.dart';
 
-class EarningsContainer extends StatelessWidget {
+class EarningsContainer extends ConsumerWidget {
   const EarningsContainer({
     Key? key,
     required this.heading,
@@ -15,10 +17,9 @@ class EarningsContainer extends StatelessWidget {
   final Color bgColor;
   // final List<Expense> registeredExpense;
 
-  String calculateTotalExpenses() {
-    double total = 0.0;
+  String calculateTotalExpenses(double salary) {
     MoneyFormatterOutput result = MoneyFormatter(
-      amount: total,
+      amount: salary,
       settings: MoneyFormatterSettings(
           symbol: '₦', thousandSeparator: ',', fractionDigits: 2),
     ).output;
@@ -26,8 +27,11 @@ class EarningsContainer extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    String totalPrice = calculateTotalExpenses();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final salary = ref.read(SalaryProvider);
+    print('Salary fetched from provider: $salary');
+    String totalPrice = calculateTotalExpenses(salary!);
+    print('Formatted salary: $totalPrice');
 
     return Container(
       height: 100.h,

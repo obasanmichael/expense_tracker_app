@@ -1,4 +1,5 @@
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:expense_tracker_app/provider/salary_provider.dart';
 import 'package:expense_tracker_app/src/components/amount_container.dart';
 import 'package:expense_tracker_app/src/components/app_bar.dart';
 import 'package:expense_tracker_app/src/components/earnings_container.dart';
@@ -6,6 +7,7 @@ import 'package:expense_tracker_app/src/components/expenses_chart/expenses_chart
 import 'package:expense_tracker_app/widgets/expense/expenses_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.registeredExpense});
@@ -30,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SafeArea(
         child: Padding(

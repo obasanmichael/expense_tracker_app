@@ -58,7 +58,7 @@ class SplashScreen extends StatelessWidget {
                   backgroundColor: null,
                   text: 'Get Started',
                   function: () {
-                    context.go('/home');
+                    context.go('/sign-up');
                   })
             ],
           ),
